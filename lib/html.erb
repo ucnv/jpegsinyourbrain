@@ -1,0 +1,119 @@
+<!doctype html>
+<!--
+
+  Jpegs In Your Brain
+  ucnv / 2013-2015
+  http://ucnv.org/jpegsinyourbrain
+  https://github.com/ucnv/jpegsinyourbrain
+
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jpegs In Your Brain</title>
+    <style>
+      body {
+        background-color: #000;
+        margin: 0;
+        padding: 0;
+      }
+      #container {
+        width: <%= width %>px;
+        margin: 20px auto;
+        font-size: 0;
+        line-height: 0;
+        padding-left: 12px;
+      }
+      h1 {
+        width: <%= width %>px;
+        margin: 0 20px;
+        font-size: 150px;
+        line-height: 1.0;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        color: #fff;
+        position: fixed;
+        z-index: 9;
+      }
+      h1.hide {
+        z-index: 0;
+        color: #000;
+      }
+      .jpg {
+        margin-right: 12px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        position: relative;
+        z-index: 5;
+      }
+      #popup {
+        display: none;
+        z-index: 10;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, .7);
+      }
+      #enlarge {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      #original {
+        display: none;
+      }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+    $(function() {
+      $('.jpg').click(function() {
+        var x = 3;
+        var w = $(this).width();
+        var h = $(this).height();
+        var e = $('#enlarge').get(0);
+        var o = $('#original').get(0);
+        if (!e.getContext) return;
+        o.width = w, o.height = h;
+        e.width = w * x, e.height = h * x;
+        var ec = e.getContext('2d');
+        var oc = o.getContext('2d');
+        oc.drawImage(this, 0, 0, w, h);
+        var px = oc.getImageData(0, 0, w, h).data;
+        for (var i = 0; i < h; i++) {
+          for (var j = 0; j < w; j++) {
+            var p = i * w + j;
+            var r = px[p * 4],
+                b = px[p * 4 + 1],
+                g = px[p * 4 + 2];
+            var c = 'rgb(' + [r, b, g].join(',') + ')';
+            ec.fillStyle = c;
+            ec.fillRect(j * x, i * x, x, x);
+          }
+        }
+        $('#popup')
+          .width($(window).width()).height($(window).height())
+          .click(function() { $('#popup').fadeOut(); })
+          .fadeIn();
+      });
+      $('h1').mouseover(function() {
+        $(this).addClass('hide');
+      });
+      $('.jpg').mouseout(function() {
+        $('h1').removeClass('hide');
+      });
+    });
+    </script>
+  </head>
+  <body>
+    <div id="popup"><canvas id="enlarge"></canvas><canvas id="original"></canvas></div>
+    <div id="container">
+      <h1>Jpegs<br> In Your Brain</h1>
+    <% images.size.times { |i| %>
+      <img class="jpg" src="images/p<%= "%04d" % i %>.jpg" alt=""><%
+    } %>
+    </div>
+  </body>
+</html>
