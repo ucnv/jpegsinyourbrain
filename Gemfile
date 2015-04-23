@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'watir'
 gem 'watir-scroll'
-gem 'nokogiri'
 gem 'rmagick'
 gem 'docopt'

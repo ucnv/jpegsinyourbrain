@@ -5,7 +5,6 @@ require 'openssl'
 require 'erb'
 require 'watir-webdriver'
 require 'watir-scroll'
-require 'nokogiri'
 require 'rmagick'
 require File.expand_path '../jpeg_encoder.rb', __FILE__
 
@@ -49,7 +48,7 @@ module JpegsInYourBrain
       print("\rScraping images: %4d / %d" % [idx + 1, divs.size])
     end
     browser.close
-    print("\rScraping images: done.      ")
+    print "\rScraping images: done.      "
     print "\n"
     Dir.mktmpdir do |tmpdir|
       dir = Pathname.new tmpdir
@@ -75,7 +74,7 @@ module JpegsInYourBrain
         print("\rEncoding images: %4d / %d" % [idx + 1, images.size])
       end
     end
-    print("\rEncoding images: done.      ")
+    print "\rEncoding images: done.      "
     print "\n"
 
     template = File.expand_path '../html.erb', __FILE__
