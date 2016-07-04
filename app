@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # encoding:utf-8
 
-require 'pathname'
 require 'docopt'
 require File.expand_path '../lib/jpegs_in_your_brain.rb', $0
 

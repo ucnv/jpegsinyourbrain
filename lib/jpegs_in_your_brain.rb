@@ -22,7 +22,7 @@ module JpegsInYourBrain
     FileUtils.rm_r distdir if File.exists? distdir
     FileUtils.mkdir_p distdir.join('images')
     url = "https://www.google.com/search?q=%s&tbm=isch" % query
-    browser =begin
+    browser = begin
       Watir::Browser.new :chrome
     rescue
       Watir::Browser.new :firefox
