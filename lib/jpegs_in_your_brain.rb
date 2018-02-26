@@ -1,9 +1,10 @@
 require 'fileutils'
+require 'pathname'
 require 'tmpdir'
 require 'open-uri'
 require 'openssl'
 require 'erb'
-require 'watir-webdriver'
+require 'watir'
 require 'watir-scroll'
 require 'rmagick'
 require File.expand_path '../jpeg_encoder.rb', __FILE__
